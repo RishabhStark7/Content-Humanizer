@@ -20,6 +20,7 @@ from src.exporters.docx_exporter import export_to_docx
 from src.exporters.md_exporter import export_to_markdown
 from src.exporters.html_exporter import export_to_html
 from src.exporters.json_exporter import export_to_json
+from src.exporters.excel_exporter import export_to_excel
 
 console = Console()
 
@@ -32,7 +33,7 @@ def cli():
 
 @cli.command("process-doc")
 @click.option("--input", "-i", required=True, type=click.Path(exists=True), help="Input document path (docx, md, html, txt)")
-@click.option("--output-dir", "-o", default="./dist", help="Output directory")
+@click.option("--output-dir", "-o", default="./output", help="Output directory")
 def process_doc(input: str, output_dir: str):
     """Process an existing document through the editorial pipeline (Mode A)."""
     console.print(Panel(f"[bold green]Human Writing Engine[/bold green]\nProcessing document: [yellow]{input}[/yellow]"))
@@ -69,19 +70,20 @@ def process_doc(input: str, output_dir: str):
     val_report = validate_article(reconstructed_doc, target_word_count=doc.total_word_count)
 
     # 7. Multi-Format Export
-    console.print("[blue]Step 7/7:[/blue] Exporting publication-ready files...")
+    console.print("[blue]Step 7/7:[/blue] Exporting publication-ready files and Excel quality report...")
     stem = in_path.stem
     export_to_docx(reconstructed_doc, out_dir / f"{stem}_humanized.docx", val_report)
     export_to_markdown(reconstructed_doc, out_dir / f"{stem}_humanized.md", val_report)
     export_to_html(reconstructed_doc, out_dir / f"{stem}_humanized.html", val_report)
     export_to_json(reconstructed_doc, out_dir / f"{stem}_humanized.json", val_report)
+    export_to_excel(reconstructed_doc, out_dir / f"{stem}_quality_markers.xlsx", val_report, div_report)
 
-    console.print(f"[bold green][OK] Done![/bold green] Exported DOCX, Markdown, HTML, and JSON to [yellow]{out_dir}[/yellow]")
+    console.print(f"[bold green][OK] Done![/bold green] Exported DOCX, Markdown, HTML, JSON, and Excel markers to [yellow]{out_dir}[/yellow]")
 
 
 @cli.command("process-brief")
 @click.option("--brief", "-b", required=True, type=click.Path(exists=True), help="Content brief YAML file path")
-@click.option("--output-dir", "-o", default="./dist", help="Output directory")
+@click.option("--output-dir", "-o", default="./output", help="Output directory")
 def process_brief(brief: str, output_dir: str):
     """Generate a publication-ready article from a content brief (Mode B)."""
     console.print(Panel(f"[bold green]Human Writing Engine[/bold green]\nGenerating from brief: [yellow]{brief}[/yellow]"))
@@ -120,14 +122,15 @@ def process_brief(brief: str, output_dir: str):
     val_report = validate_article(reconstructed_doc, target_word_count=brief_model.target_word_count)
 
     # 7. Multi-Format Export
-    console.print("[blue]Step 7/7:[/blue] Exporting publication-ready outputs...")
+    console.print("[blue]Step 7/7:[/blue] Exporting publication-ready outputs and Excel report...")
     stem = brief_path.stem
     export_to_docx(reconstructed_doc, out_dir / f"{stem}_article.docx", val_report)
     export_to_markdown(reconstructed_doc, out_dir / f"{stem}_article.md", val_report)
     export_to_html(reconstructed_doc, out_dir / f"{stem}_article.html", val_report)
     export_to_json(reconstructed_doc, out_dir / f"{stem}_article.json", val_report)
+    export_to_excel(reconstructed_doc, out_dir / f"{stem}_quality_markers.xlsx", val_report, div_report)
 
-    console.print(f"[bold green][OK] Done![/bold green] Generated files exported to [yellow]{out_dir}[/yellow]")
+    console.print(f"[bold green][OK] Done![/bold green] Generated files and Excel report exported to [yellow]{out_dir}[/yellow]")
 
 
 if __name__ == "__main__":

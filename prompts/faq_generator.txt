@@ -1,0 +1,10 @@
+Generate at least 7 comprehensive Frequently Asked Questions (FAQs) for the following topic:
+
+Topic: {topic}
+Audience: {target_audience}
+
+REQUIREMENTS:
+- Minimum 7 questions.
+- Every answer must contain at least 3-4 substantive lines (35-60 words).
+- Provide clear, direct, evidence-based answers.
+- Avoid generic filler text.

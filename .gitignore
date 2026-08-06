@@ -1,0 +1,36 @@
+# Environment & Secret files
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*credentials*.json
+gcp-key.json
+service_account.json
+secrets/
+
+# Output & Build artifacts
+dist/
+build/
+*.egg-info/
+/tmp/
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

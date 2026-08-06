@@ -1,0 +1,14 @@
+Create a detailed content outline for an article based on the following content brief.
+
+Topic: {topic}
+Objective: {objective}
+Target Audience: {target_audience}
+Tone: {tone}
+Word Count Target: {target_word_count}
+Primary Keywords: {keywords}
+
+Ensure the outline includes:
+1. One catchy, keyword-optimized H1 title.
+2. Logically ordered H2 and H3 subheadings with target word count per section.
+3. Key bullet points and entities to cover in each section.
+4. Exactly 7 relevant FAQ questions.

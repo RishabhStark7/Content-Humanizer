@@ -1,0 +1,33 @@
+word_count:
+  tolerance: 100
+  exclude_faqs: true
+
+readability:
+  target_flesch_reading_ease: 65.0
+  max_grade_level: 8.5
+  min_grade_level: 6.5
+
+faqs:
+  min_count: 7
+  min_answer_lines: 3
+  min_answer_words: 35
+
+headings:
+  require_h1: true
+  max_h1_count: 1
+  enforce_strict_hierarchy: true
+
+style:
+  banned_cliches:
+    - "delve"
+    - "tapestry"
+    - "testament"
+    - "pivotal"
+    - "unleash"
+    - "landscape"
+    - "realm"
+    - "beacon"
+    - "game-changer"
+    - "in conclusion"
+    - "furthermore"
+    - "it is important to note"

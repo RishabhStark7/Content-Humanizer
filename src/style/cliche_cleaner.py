@@ -1,49 +1,58 @@
-"""AI cliché cleaner removing overused AI filler words."""
+"""Banned AI cliché and robotic transition cleaner."""
 
 import re
 
-BANNED_CLICHES = [
-    r"\bdelve\b",
-    r"\btapestry\b",
-    r"\btestament\b",
-    r"\bpivotal\b",
-    r"\bunleash\b",
-    r"\blandscape\b",
-    r"\brealm\b",
-    r"\bbeacon\b",
-    r"\bgame-changer\b",
-    r"\bparamount\b",
-    r"\bfostering\b",
-    r"\bholistic\b",
+BANNED_AI_CLICHES = [
+    # Explicitly forbidden transitions and AI habits
+    "this is why",
+    "together, these",
+    "these measures",
+    "these processes",
+    "helps maintain",
+    "helps support",
+    "designed to",
+    "throughout the journey",
+    "plays an important role",
+    "in addition",
+    "furthermore",
+    "moreover",
+    "it starts with",
+    "it continues through",
+    "provides transparency",
+    "gives visibility",
+    # General AI fluff words
+    "delve",
+    "tapestry",
+    "testament",
+    "beacon",
+    "vital role",
+    "pivotal",
+    "game-changer",
+    "seamlessly",
+    "paramount", "leverage", "robust", "synergy",
 ]
 
-REPLACEMENTS = {
-    "delve": "examine",
-    "tapestry": "combination",
-    "testament": "proof",
-    "pivotal": "important",
-    "unleash": "release",
-    "landscape": "field",
-    "realm": "area",
-    "beacon": "model",
-    "game-changer": "major advance",
-    "paramount": "key",
-    "fostering": "building",
-    "holistic": "complete",
-}
+BANNED_CLICHES = BANNED_AI_CLICHES
 
 
 def clean_ai_cliches(text: str) -> str:
-    """Replace common AI clichés with clear human words.
+    """Strip banned AI cliché transitions and robotic phrases from text.
 
     Args:
-        text: Input article text.
+        text: Input string.
 
     Returns:
-        Cleaned text with AI clichés removed.
+        Cleaned text string.
     """
+    if not text:
+        return text
+
     cleaned = text
-    for word, replacement in REPLACEMENTS.items():
-        pattern = re.compile(rf"\b{word}\b", re.IGNORECASE)
-        cleaned = pattern.sub(replacement, cleaned)
-    return cleaned
+    for cliché in BANNED_AI_CLICHES:
+        pattern = re.compile(rf"\b{re.escape(cliché)}\b,?\s*", re.IGNORECASE)
+        cleaned = pattern.sub("", cleaned)
+
+    # Clean double spaces and leading spaces on lines
+    cleaned = re.sub(r" +", " ", cleaned)
+    cleaned = re.sub(r"\n +", "\n", cleaned)
+    return cleaned.strip()

@@ -32,9 +32,28 @@ def cli():
     pass
 
 
-def save_draft_variants(variants, drafts_dir: Path):
-    """Save all 10 generated draft variants as individual markdown files for full visibility."""
+def save_draft_variants(variants, reconstructed_doc, drafts_dir: Path):
+    """Save Version 1 (Educational), Version 2 (Conversational), Version 3 (Patient-first), and Version 4 (Reconstructed Blended) for full visibility."""
     drafts_dir.mkdir(parents=True, exist_ok=True)
+
+    # Map primary versions
+    v1_educational = next((v for v in variants if "technical" in v.persona_id or "scientific" in v.persona_id or "senior" in v.persona_id), variants[0] if variants else None)
+    v2_conversational = next((v for v in variants if "conversational" in v.persona_id or "educator" in v.persona_id), variants[1] if len(variants) > 1 else None)
+    v3_patient_first = next((v for v in variants if "story" in v.persona_id or "demand" in v.persona_id or "evidence" in v.persona_id), variants[2] if len(variants) > 2 else None)
+
+    if v1_educational:
+        (drafts_dir / "Version_1_Educational.md").write_text(f"---\nversion: \"Version 1\"\nstyle: \"Educational (Clear, Structured, Neutral)\"\npersona: \"{v1_educational.persona_name}\"\n---\n\n" + v1_educational.raw_text, encoding="utf-8")
+
+    if v2_conversational:
+        (drafts_dir / "Version_2_Conversational.md").write_text(f"---\nversion: \"Version 2\"\nstyle: \"Conversational (Natural, Patient-friendly, Warmer)\"\npersona: \"{v2_conversational.persona_name}\"\n---\n\n" + v2_conversational.raw_text, encoding="utf-8")
+
+    if v3_patient_first:
+        (drafts_dir / "Version_3_Patient_First.md").write_text(f"---\nversion: \"Version 3\"\nstyle: \"Patient-first (Relatable, Natural Rhythm)\"\npersona: \"{v3_patient_first.persona_name}\"\n---\n\n" + v3_patient_first.raw_text, encoding="utf-8")
+
+    if reconstructed_doc:
+        (drafts_dir / "Version_4_Reconstructed_Blended_Final.md").write_text(f"---\nversion: \"Version 4\"\nstyle: \"Reconstructed Blended Final (Pure Python Synthesis, 0 LLM Calls)\"\n---\n\n" + reconstructed_doc.raw_content, encoding="utf-8")
+
+    # Also save individual persona variants 01-10
     for idx, v in enumerate(variants, 1):
         filename = f"{idx:02d}_{v.persona_id}.md"
         draft_path = drafts_dir / filename
@@ -77,13 +96,9 @@ def process_doc(input: str, output_dir: str):
     console.print("[blue]Step 2/7:[/blue] Aligning outline structure...")
     doc = generate_outline_document(doc)
 
-    # 3. Generate 10 Variants
-    console.print("[blue]Step 3/7:[/blue] Generating 10 editorial persona variants via Vertex AI...")
+    # 3. Generate Variants (Version 1 Educational, Version 2 Conversational, Version 3 Patient-first)
+    console.print("[blue]Step 3/7:[/blue] Generating Version 1 (Educational), Version 2 (Conversational), and Version 3 (Patient-first) variants via Vertex AI...")
     variants = asyncio.run(generate_10_variants(doc))
-
-    # Save all 10 draft variants to output/drafts/ for full visibility
-    save_draft_variants(variants, drafts_dir)
-    console.print(f"  [bold cyan]Saved all 10 draft variants to:[/bold cyan] {drafts_dir}")
 
     # 4. Diversity Analysis (Keep 7, Discard 3)
     console.print("[blue]Step 4/7:[/blue] Running diversity filter (discarding 3 most redundant)...")
@@ -91,8 +106,8 @@ def process_doc(input: str, output_dir: str):
     console.print(f"  Retained personas: {', '.join(div_report.retained_persona_ids)}")
     console.print(f"  Discarded personas: {', '.join(div_report.discarded_persona_ids)}")
 
-    # 5. Local Deterministic Reconstruction (Pure Python)
-    console.print("[blue]Step 5/7:[/blue] Reconstructing article with Local Human Reconstruction Engine (0 LLM calls)...")
+    # 5. Local Deterministic Reconstruction (Version 4 Blended - Pure Python, 0 LLM calls)
+    console.print("[blue]Step 5/7:[/blue] Reconstructing Version 4 (Blended Final) with Local Human Reconstruction Engine (0 LLM calls)...")
     reconstructed_doc = reconstruct_article(retained_variants, doc)
 
     # 6. Style Refinement & Validation
@@ -100,6 +115,10 @@ def process_doc(input: str, output_dir: str):
     reconstructed_doc.raw_content = clean_ai_cliches(reconstructed_doc.raw_content)
     reconstructed_doc = optimize_document_readability(reconstructed_doc, target_body_words=doc.total_word_count)
     val_report = validate_article(reconstructed_doc, target_word_count=doc.total_word_count)
+
+    # Save all draft versions (V1, V2, V3, V4) to output/drafts/ for full visibility
+    save_draft_variants(variants, reconstructed_doc, drafts_dir)
+    console.print(f"  [bold cyan]Saved Version 1, Version 2, Version 3, and Version 4 drafts to:[/bold cyan] {drafts_dir}")
 
     # 7. Multi-Format Export to output/final_doc/
     console.print("[blue]Step 7/7:[/blue] Exporting final publication-ready outputs to final_doc/...")
@@ -110,7 +129,7 @@ def process_doc(input: str, output_dir: str):
     export_to_json(reconstructed_doc, final_doc_dir / f"{stem}_humanized.json", val_report)
     export_to_excel(reconstructed_doc, final_doc_dir / f"{stem}_quality_markers.xlsx", val_report, div_report, all_variants=variants)
 
-    console.print(f"[bold green][OK] Done![/bold green]\nFinal Document: [yellow]{final_doc_dir}[/yellow]\n10 Drafts: [yellow]{drafts_dir}[/yellow]")
+    console.print(f"[bold green][OK] Done![/bold green]\nFinal Document: [yellow]{final_doc_dir}[/yellow]\nDrafts: [yellow]{drafts_dir}[/yellow]")
 
 
 @cli.command("process-brief")
@@ -151,19 +170,16 @@ def process_brief(brief: str, output_dir: str):
     # 2. Outline refinement
     doc = generate_outline_document(doc)
 
-    # 3. Generate 10 Variants
-    console.print("[blue]Step 3/7:[/blue] Generating 10 editorial persona variants via Vertex AI...")
+    # 3. Generate Variants
+    console.print("[blue]Step 3/7:[/blue] Generating Version 1 (Educational), Version 2 (Conversational), and Version 3 (Patient-first) variants via Vertex AI...")
     variants = asyncio.run(generate_10_variants(doc))
-
-    save_draft_variants(variants, drafts_dir)
-    console.print(f"  [bold cyan]Saved all 10 draft variants to:[/bold cyan] {drafts_dir}")
 
     # 4. Diversity Analysis
     console.print("[blue]Step 4/7:[/blue] Filtering top 7 most diverse variants...")
     retained_variants, div_report = filter_most_diverse_variants(variants, retain_count=7)
 
     # 5. Local Reconstruction
-    console.print("[blue]Step 5/7:[/blue] Synthesizing cohesive article via Human Reconstruction Engine...")
+    console.print("[blue]Step 5/7:[/blue] Synthesizing Version 4 (Blended Final) via Human Reconstruction Engine...")
     reconstructed_doc = reconstruct_article(retained_variants, doc)
 
     # 6. Style Refinement & Validation
@@ -171,6 +187,9 @@ def process_brief(brief: str, output_dir: str):
     reconstructed_doc.raw_content = clean_ai_cliches(reconstructed_doc.raw_content)
     reconstructed_doc = optimize_document_readability(reconstructed_doc, target_body_words=brief_model.target_word_count)
     val_report = validate_article(reconstructed_doc, target_word_count=brief_model.target_word_count)
+
+    save_draft_variants(variants, reconstructed_doc, drafts_dir)
+    console.print(f"  [bold cyan]Saved Version 1, Version 2, Version 3, and Version 4 drafts to:[/bold cyan] {drafts_dir}")
 
     # 7. Multi-Format Export
     console.print("[blue]Step 7/7:[/blue] Exporting publication-ready outputs to final_doc/...")
@@ -181,7 +200,7 @@ def process_brief(brief: str, output_dir: str):
     export_to_json(reconstructed_doc, final_doc_dir / f"{stem}_article.json", val_report)
     export_to_excel(reconstructed_doc, final_doc_dir / f"{stem}_quality_markers.xlsx", val_report, div_report, all_variants=variants)
 
-    console.print(f"[bold green][OK] Done![/bold green]\nFinal Document: [yellow]{final_doc_dir}[/yellow]\n10 Drafts: [yellow]{drafts_dir}[/yellow]")
+    console.print(f"[bold green][OK] Done![/bold green]\nFinal Document: [yellow]{final_doc_dir}[/yellow]\nDrafts: [yellow]{drafts_dir}[/yellow]")
 
 
 if __name__ == "__main__":

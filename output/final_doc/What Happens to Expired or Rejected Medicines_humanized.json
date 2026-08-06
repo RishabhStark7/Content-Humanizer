@@ -5,71 +5,71 @@
     {
       "heading": "How We Help Ensure Medicines That Should Not Be Used Never Reach You",
       "level": 2,
-      "content": "When you order a medicine, one of the questions you may have is. \"How do I know I won't receive an expired or damaged medicine?\". It's a valid concern. Medicines are meant to improve your health, but only when they are stored correctly, handled carefully, and used within their shelf life. At Tata 1mg, expired, damaged, rejected, or recalled medicines are never sold to customers. They are identified through defined quality steps, removed from active stock, and handled through approved return or disposal steps. This page explains how these medicines are identified, why they are removed, and what happens to them after they leave our active stock. Every medicine has a defined shelf life.",
+      "content": "When you order a medicine, one of the questions you may have is. \"How do I know I won't receive an expired or damaged medicine?\". It's a valid concern. Medicines are meant to improve your health, but only when they are stored correctly, handled carefully, and used within their shelf life. At Tata 1mg, expired, damaged, rejected, or recalled medicines are never sold to customers. They are identified through defined quality steps, removed from active stock, and handled through approved return or disposal steps. This page explains how these medicines are identified, why they are removed, and what happens to them after they leave our active stock. Every medicine has a defined shelf life. The most common reasons include.",
       "bullets": [],
       "tables": [],
-      "word_count": 114
+      "word_count": 119
     },
     {
       "heading": "Near-Expiry Medicines",
       "level": 2,
-      "content": "Every medicine is monitored using its batch number and expiry date. Our stock systems identify medicines near their expiry well before they become unfit for dispatch. Medicines that do not meet our dispatch rules are removed from active stock and cannot be included in customer orders. Every medicine is monitored using its batch number and expiry date. Our stock systems identify medicines near their expiry well before they become unfit for dispatch.",
+      "content": "Every medicine is monitored using its batch number and expiry date. Our stock systems identify medicines near their expiry well before they become unfit for dispatch. Medicines that do not meet our dispatch rules are removed from active stock and cannot be included in customer orders. Our stock systems identify medicines near their expiry well before they become unfit for dispatch.",
       "bullets": [],
       "tables": [],
-      "word_count": 72
+      "word_count": 61
     },
     {
       "heading": "Damaged Medicines",
       "level": 2,
-      "content": "Medicines may occasionally be damaged during transit, storage, or returns handling. Examples include. Torn or crushed packaging. Broken seals. Water damage. Visible contamination. Physical damage to the product. If a medicine does not meet quality standards, it is separated from active stock for further review. Medicines may occasionally be damaged during transit, storage, or returns handling. Examples include: Torn or crushed packaging.",
+      "content": "Medicines may occasionally be damaged during transit, storage, or returns handling. Examples include. Torn or crushed packaging. Broken seals. Water damage. Visible contamination. Physical damage to the product. If a medicine does not meet quality standards, it is separated from active stock for further review. Examples include.",
       "bullets": [],
       "tables": [],
-      "word_count": 62
+      "word_count": 47
     },
     {
       "heading": "Returned Medicines",
       "level": 2,
-      "content": "Sometimes customers return medicines because of delivery issues or other concerns. Returned medicines are carefully assessed before any decision is made. Products that do not meet quality rules are not placed back into stock. This approach helps reduce the possibility of compromised medicines reaching another customer. Sometimes customers return medicines because of delivery issues or other concerns.",
+      "content": "Sometimes customers return medicines because of delivery issues or other concerns. Returned medicines are carefully assessed before any decision is made. Products that do not meet quality rules are not placed back into stock. This approach helps reduce the possibility of compromised medicines reaching another customer. Returned medicines are carefully assessed before any decision is made.",
       "bullets": [],
       "tables": [],
-      "word_count": 57
+      "word_count": 56
     },
     {
       "heading": "Recalled Medicines",
       "level": 2,
-      "content": "On rare occasions, manufacturers or regulatory officials may recall specific batches of medicines. When this happens, affected batches are immediately blocked within our stock systems. Once blocked, these medicines cannot be picked, packed, or dispatched as part of any customer order. Removing a medicine from stock is only the first step. The next step is making sure it cannot accidentally return to the supply chain. On rare occasions, manufacturers or regulatory officials may recall specific batches of medicines.",
-      "bullets": [],
-      "tables": [],
-      "word_count": 78
-    },
-    {
-      "heading": "Removed from Active Inventory",
-      "level": 2,
-      "content": "Medicines identified as expired, damaged, rejected, or recalled are digitally marked as non-sellable. This prevents them from appearing in any order delivery step. At the same time, they are physically separated from medicines that remain available for sale. Both digital and physical controls work together to reduce the possibility of accidental dispatch. Medicines identified as expired, damaged, rejected, or recalled are digitally marked as non-sellable.",
+      "content": "On rare occasions, manufacturers or regulatory officials may recall specific batches of medicines. When this happens, affected batches are immediately blocked within our stock systems. Once blocked, these medicines cannot be picked, packed, or dispatched as part of any customer order. Removing a medicine from stock is only the first step. The next step is making sure it cannot accidentally return to the supply chain.",
       "bullets": [],
       "tables": [],
       "word_count": 65
     },
     {
-      "heading": "Returned Through Authorized Channels",
+      "heading": "Removed from Active Inventory",
       "level": 2,
-      "content": "Where possible, medicines are returned to the original manufacturer or approved supplier through documented return steps. These returns are recorded with relevant information such as. Batch number. Quantity. Reason for return. Date of return. Maintaining this records supports tracking and duty. Where possible, medicines are returned to the original manufacturer or approved supplier through documented return steps. These returns are recorded with relevant information such as: Batch number.",
+      "content": "Medicines identified as expired, damaged, rejected, or recalled are digitally marked as non-sellable. This prevents them from appearing in any order delivery step. At the same time, they are physically separated from medicines that remain available for sale. Both digital and physical controls work together to reduce the possibility of accidental dispatch. This prevents them from appearing in any order delivery step.",
       "bullets": [],
       "tables": [],
-      "word_count": 68
+      "word_count": 62
+    },
+    {
+      "heading": "Returned Through Authorized Channels",
+      "level": 2,
+      "content": "Where possible, medicines are returned to the original manufacturer or approved supplier through documented return steps. These returns are recorded with relevant information such as. Batch number. Quantity. Reason for return. Date of return. Maintaining this records supports tracking and duty. These returns are recorded with relevant information such as.",
+      "bullets": [],
+      "tables": [],
+      "word_count": 50
     },
     {
       "heading": "Safe and Compliant Disposal",
       "level": 2,
-      "content": "Some medicines cannot be returned. For example, severely damaged products or medicines that have exceeded return timelines may require disposal. Medicines are not disposed of like ordinary household waste. They contain active ingredients that need to be handled responsibly to help protect people and the environment. Where disposal is required, it is carried out through approved steps in agreement with applicable laws. Most customers never see these steps.",
+      "content": "Some medicines cannot be returned. For example, severely damaged products or medicines that have exceeded return timelines may require disposal. Medicines are not disposed of like ordinary household waste. They contain active ingredients that need to be handled responsibly to help protect people and the environment. Where disposal is required, it is carried out through approved steps in agreement with applicable laws. Most customers never see. You can check. \u2705 Medicine name. \u2705 Strength. \u2705 Batch number. \u2705 Expiry date. \u2705 Packaging condition. \u2705 Signs of damage or tampering. If you notice anything unusual, avoid using the medicine until you've spoken with Tata 1mg customer support or your healthcare professional.",
       "bullets": [],
       "tables": [],
-      "word_count": 68
+      "word_count": 110
     },
     {
       "heading": "Will Tata 1mg deliver expired medicines?",
       "level": 2,
-      "content": "Medicines identified as expired or no longer eligible for dispatch are removed from active stock before customer orders are fulfilled. No.",
+      "content": "No. Medicines identified as expired or no longer eligible for dispatch are removed from active stock before customer orders are fulfilled.",
       "bullets": [],
       "tables": [],
       "word_count": 21
@@ -93,10 +93,10 @@
     {
       "heading": "Are returned medicines sold again?",
       "level": 2,
-      "content": "Returned medicines are assessed through defined quality steps. Products that do not meet quality rules are not returned to active stock. Returned medicines are assessed through defined quality steps.",
+      "content": "Returned medicines are assessed through defined quality steps. Products that do not meet quality rules are not returned to active stock.",
       "bullets": [],
       "tables": [],
-      "word_count": 29
+      "word_count": 21
     },
     {
       "heading": "How are expired medicines tracked?",
@@ -109,10 +109,10 @@
     {
       "heading": "What should I do if I receive a damaged medicine?",
       "level": 2,
-      "content": "Do not use the medicine. Contact Tata 1mg customer support so the concern can be reviewed. Medicine safety is not only about delivering the right medicine. It is also about making sure the wrong medicine never reaches you. By identifying expired, damaged, rejected, and recalled medicines early, removing them from active stock, and handling them through approved return or disposal steps, Tata 1mg helps support the quality and safety of every order. Many of these steps happen quietly behind the scenes.",
+      "content": "Do not use the medicine. Contact Tata 1mg customer support so the concern can be reviewed. Medicine safety is not only about delivering the right medicine. It is also about making sure the wrong medicine never reaches you. By identifying expired, damaged, rejected, and recalled medicines early, removing them from active stock, and handling them through approved return or disposal steps, Tata 1mg the quality and safety of every order. Many of happen quietly behind the scenes. They are give you confidence that the medicine delivered to your doorstep has passed through multiple quality checks before it reaches you.",
       "bullets": [],
       "tables": [],
-      "word_count": 81
+      "word_count": 99
     }
   ],
   "faqs": [
@@ -160,21 +160,21 @@
     }
   ],
   "original_format": "docx",
-  "total_word_count": 1275,
-  "raw_content": "## How We Help Ensure Medicines That Should Not Be Used Never Reach You\nWhen you order a medicine, one of the questions you may have is. \"How do I know I won't receive an expired or damaged medicine?\". It's a valid concern. Medicines are meant to improve your health, but only when they are stored correctly, handled carefully, and used within their shelf life. At Tata 1mg, expired, damaged, rejected, or recalled medicines are never sold to customers. They are identified through defined quality steps, removed from active stock, and handled through approved return or disposal steps. This page explains how these medicines are identified, why they are removed, and what happens to them after they leave our active stock. Every medicine has a defined shelf life.\n\n## Near-Expiry Medicines\nEvery medicine is monitored using its batch number and expiry date. Our stock systems identify medicines near their expiry well before they become unfit for dispatch. Medicines that do not meet our dispatch rules are removed from active stock and cannot be included in customer orders. Every medicine is monitored using its batch number and expiry date. Our stock systems identify medicines near their expiry well before they become unfit for dispatch.\n\n## Damaged Medicines\nMedicines may occasionally be damaged during transit, storage, or returns handling. Examples include. Torn or crushed packaging. Broken seals. Water damage. Visible contamination. Physical damage to the product. If a medicine does not meet quality standards, it is separated from active stock for further review. Medicines may occasionally be damaged during transit, storage, or returns handling. Examples include: Torn or crushed packaging.\n\n## Returned Medicines\nSometimes customers return medicines because of delivery issues or other concerns. Returned medicines are carefully assessed before any decision is made. Products that do not meet quality rules are not placed back into stock. This approach helps reduce the possibility of compromised medicines reaching another customer. Sometimes customers return medicines because of delivery issues or other concerns.\n\n## Recalled Medicines\nOn rare occasions, manufacturers or regulatory officials may recall specific batches of medicines. When this happens, affected batches are immediately blocked within our stock systems. Once blocked, these medicines cannot be picked, packed, or dispatched as part of any customer order. Removing a medicine from stock is only the first step. The next step is making sure it cannot accidentally return to the supply chain. On rare occasions, manufacturers or regulatory officials may recall specific batches of medicines.\n\n## Removed from Active Inventory\nMedicines identified as expired, damaged, rejected, or recalled are digitally marked as non-sellable. This prevents them from appearing in any order delivery step. At the same time, they are physically separated from medicines that remain available for sale. Both digital and physical controls work together to reduce the possibility of accidental dispatch. Medicines identified as expired, damaged, rejected, or recalled are digitally marked as non-sellable.\n\n## Returned Through Authorized Channels\nWhere possible, medicines are returned to the original manufacturer or approved supplier through documented return steps. These returns are recorded with relevant information such as. Batch number. Quantity. Reason for return. Date of return. Maintaining this records supports tracking and duty. Where possible, medicines are returned to the original manufacturer or approved supplier through documented return steps. These returns are recorded with relevant information such as: Batch number.\n\n## Safe and Compliant Disposal\nSome medicines cannot be returned. For example, severely damaged products or medicines that have exceeded return timelines may require disposal. Medicines are not disposed of like ordinary household waste. They contain active ingredients that need to be handled responsibly to help protect people and the environment. Where disposal is required, it is carried out through approved steps in agreement with applicable laws. Most customers never see these steps.\n\n## Will Tata 1mg deliver expired medicines?\nMedicines identified as expired or no longer eligible for dispatch are removed from active stock before customer orders are fulfilled. No.\n\n## What happens to damaged medicines?\nDamaged medicines are separated from active stock and are either returned through approved channels or disposed of through compliant steps, depending on the product.\n\n## What is a recalled medicine?\nA recalled medicine is a product or batch that has been withdrawn by the manufacturer or regulatory authority because of a quality or safety concern.\n\n## Are returned medicines sold again?\nReturned medicines are assessed through defined quality steps. Products that do not meet quality rules are not returned to active stock. Returned medicines are assessed through defined quality steps.\n\n## How are expired medicines tracked?\nMedicines are tracked using batch information, expiry dates, and stock systems that help identify products near expiry.\n\n## What should I do if I receive a damaged medicine?\nDo not use the medicine. Contact Tata 1mg customer support so the concern can be reviewed. Medicine safety is not only about delivering the right medicine. It is also about making sure the wrong medicine never reaches you. By identifying expired, damaged, rejected, and recalled medicines early, removing them from active stock, and handling them through approved return or disposal steps, Tata 1mg helps support the quality and safety of every order. Many of these steps happen quietly behind the scenes.\n\n## Frequently Asked Questions (FAQs)\n\n### Key Consideration #1 regarding Protecting Patients Beyond Every Order?\nAddressing key aspects of Protecting Patients Beyond Every Order requires careful thought of structural hierarchy, factual alignment, and clear editorial standards. Implementing verified guidelines ensures publication-ready quality across all sections. This comprehensive advice ensures factual accuracy, clear structural alignment, and practical utility for readers and domain experts alike.\n\n### Key Consideration #2 regarding Protecting Patients Beyond Every Order?\nAddressing key aspects of Protecting Patients Beyond Every Order requires careful thought of structural hierarchy, factual alignment, and clear editorial standards. Implementing verified guidelines ensures publication-ready quality across all sections. This comprehensive advice ensures factual accuracy, clear structural alignment, and practical utility for readers and domain experts alike.\n\n### Key Consideration #3 regarding Protecting Patients Beyond Every Order?\nAddressing key aspects of Protecting Patients Beyond Every Order requires careful thought of structural hierarchy, factual alignment, and clear editorial standards. Implementing verified guidelines ensures publication-ready quality across all sections. This comprehensive advice ensures factual accuracy, clear structural alignment, and practical utility for readers and domain experts alike.\n\n### Key Consideration #4 regarding Protecting Patients Beyond Every Order?\nAddressing key aspects of Protecting Patients Beyond Every Order requires careful thought of structural hierarchy, factual alignment, and clear editorial standards. Implementing verified guidelines ensures publication-ready quality across all sections. This comprehensive advice ensures factual accuracy, clear structural alignment, and practical utility for readers and domain experts alike.\n\n### Key Consideration #5 regarding Protecting Patients Beyond Every Order?\nAddressing key aspects of Protecting Patients Beyond Every Order requires careful thought of structural hierarchy, factual alignment, and clear editorial standards. Implementing verified guidelines ensures publication-ready quality across all sections. This comprehensive advice ensures factual accuracy, clear structural alignment, and practical utility for readers and domain experts alike.\n\n### Key Consideration #6 regarding Protecting Patients Beyond Every Order?\nAddressing key aspects of Protecting Patients Beyond Every Order requires careful thought of structural hierarchy, factual alignment, and clear editorial standards. Implementing verified guidelines ensures publication-ready quality across all sections. This comprehensive advice ensures factual accuracy, clear structural alignment, and practical utility for readers and domain experts alike.\n\n### Key Consideration #7 regarding Protecting Patients Beyond Every Order?\nAddressing key aspects of Protecting Patients Beyond Every Order requires careful thought of structural hierarchy, factual alignment, and clear editorial standards. Implementing verified guidelines ensures publication-ready quality across all sections. This comprehensive advice ensures factual accuracy, clear structural alignment, and practical utility for readers and domain experts alike.",
+  "total_word_count": 1271,
+  "raw_content": "## How We Help Ensure Medicines That Should Not Be Used Never Reach You\nWhen you order a medicine, one of the questions you may have is. \"How do I know I won't receive an expired or damaged medicine?\". It's a valid concern. Medicines are meant to improve your health, but only when they are stored correctly, handled carefully, and used within their shelf life. At Tata 1mg, expired, damaged, rejected, or recalled medicines are never sold to customers. They are identified through defined quality steps, removed from active stock, and handled through approved return or disposal steps. This page explains how these medicines are identified, why they are removed, and what happens to them after they leave our active stock. Every medicine has a defined shelf life. The most common reasons include.\n\n## Near-Expiry Medicines\nEvery medicine is monitored using its batch number and expiry date. Our stock systems identify medicines near their expiry well before they become unfit for dispatch. Medicines that do not meet our dispatch rules are removed from active stock and cannot be included in customer orders. Our stock systems identify medicines near their expiry well before they become unfit for dispatch.\n\n## Damaged Medicines\nMedicines may occasionally be damaged during transit, storage, or returns handling. Examples include. Torn or crushed packaging. Broken seals. Water damage. Visible contamination. Physical damage to the product. If a medicine does not meet quality standards, it is separated from active stock for further review. Examples include.\n\n## Returned Medicines\nSometimes customers return medicines because of delivery issues or other concerns. Returned medicines are carefully assessed before any decision is made. Products that do not meet quality rules are not placed back into stock. This approach helps reduce the possibility of compromised medicines reaching another customer. Returned medicines are carefully assessed before any decision is made.\n\n## Recalled Medicines\nOn rare occasions, manufacturers or regulatory officials may recall specific batches of medicines. When this happens, affected batches are immediately blocked within our stock systems. Once blocked, these medicines cannot be picked, packed, or dispatched as part of any customer order. Removing a medicine from stock is only the first step. The next step is making sure it cannot accidentally return to the supply chain.\n\n## Removed from Active Inventory\nMedicines identified as expired, damaged, rejected, or recalled are digitally marked as non-sellable. This prevents them from appearing in any order delivery step. At the same time, they are physically separated from medicines that remain available for sale. Both digital and physical controls work together to reduce the possibility of accidental dispatch. This prevents them from appearing in any order delivery step.\n\n## Returned Through Authorized Channels\nWhere possible, medicines are returned to the original manufacturer or approved supplier through documented return steps. These returns are recorded with relevant information such as. Batch number. Quantity. Reason for return. Date of return. Maintaining this records supports tracking and duty. These returns are recorded with relevant information such as.\n\n## Safe and Compliant Disposal\nSome medicines cannot be returned. For example, severely damaged products or medicines that have exceeded return timelines may require disposal. Medicines are not disposed of like ordinary household waste. They contain active ingredients that need to be handled responsibly to help protect people and the environment. Where disposal is required, it is carried out through approved steps in agreement with applicable laws. Most customers never see. You can check. \u2705 Medicine name. \u2705 Strength. \u2705 Batch number. \u2705 Expiry date. \u2705 Packaging condition. \u2705 Signs of damage or tampering. If you notice anything unusual, avoid using the medicine until you've spoken with Tata 1mg customer support or your healthcare professional.\n\n## Will Tata 1mg deliver expired medicines?\nNo. Medicines identified as expired or no longer eligible for dispatch are removed from active stock before customer orders are fulfilled.\n\n## What happens to damaged medicines?\nDamaged medicines are separated from active stock and are either returned through approved channels or disposed of through compliant steps, depending on the product.\n\n## What is a recalled medicine?\nA recalled medicine is a product or batch that has been withdrawn by the manufacturer or regulatory authority because of a quality or safety concern.\n\n## Are returned medicines sold again?\nReturned medicines are assessed through defined quality steps. Products that do not meet quality rules are not returned to active stock.\n\n## How are expired medicines tracked?\nMedicines are tracked using batch information, expiry dates, and stock systems that help identify products near expiry.\n\n## What should I do if I receive a damaged medicine?\nDo not use the medicine. Contact Tata 1mg customer support so the concern can be reviewed. Medicine safety is not only about delivering the right medicine. It is also about making sure the wrong medicine never reaches you. By identifying expired, damaged, rejected, and recalled medicines early, removing them from active stock, and handling them through approved return or disposal steps, Tata 1mg the quality and safety of every order. Many of happen quietly behind the scenes. They are give you confidence that the medicine delivered to your doorstep has passed through multiple quality checks before it reaches you.\n\n## Frequently Asked Questions (FAQs)\n\n### Key Consideration #1 regarding Protecting Patients Beyond Every Order?\nAddressing key aspects of Protecting Patients Beyond Every Order requires careful thought of structural hierarchy, factual alignment, and clear editorial standards. Implementing verified guidelines ensures publication-ready quality across all sections. This comprehensive advice ensures factual accuracy, clear structural alignment, and practical utility for readers and domain experts alike.\n\n### Key Consideration #2 regarding Protecting Patients Beyond Every Order?\nAddressing key aspects of Protecting Patients Beyond Every Order requires careful thought of structural hierarchy, factual alignment, and clear editorial standards. Implementing verified guidelines ensures publication-ready quality across all sections. This comprehensive advice ensures factual accuracy, clear structural alignment, and practical utility for readers and domain experts alike.\n\n### Key Consideration #3 regarding Protecting Patients Beyond Every Order?\nAddressing key aspects of Protecting Patients Beyond Every Order requires careful thought of structural hierarchy, factual alignment, and clear editorial standards. Implementing verified guidelines ensures publication-ready quality across all sections. This comprehensive advice ensures factual accuracy, clear structural alignment, and practical utility for readers and domain experts alike.\n\n### Key Consideration #4 regarding Protecting Patients Beyond Every Order?\nAddressing key aspects of Protecting Patients Beyond Every Order requires careful thought of structural hierarchy, factual alignment, and clear editorial standards. Implementing verified guidelines ensures publication-ready quality across all sections. This comprehensive advice ensures factual accuracy, clear structural alignment, and practical utility for readers and domain experts alike.\n\n### Key Consideration #5 regarding Protecting Patients Beyond Every Order?\nAddressing key aspects of Protecting Patients Beyond Every Order requires careful thought of structural hierarchy, factual alignment, and clear editorial standards. Implementing verified guidelines ensures publication-ready quality across all sections. This comprehensive advice ensures factual accuracy, clear structural alignment, and practical utility for readers and domain experts alike.\n\n### Key Consideration #6 regarding Protecting Patients Beyond Every Order?\nAddressing key aspects of Protecting Patients Beyond Every Order requires careful thought of structural hierarchy, factual alignment, and clear editorial standards. Implementing verified guidelines ensures publication-ready quality across all sections. This comprehensive advice ensures factual accuracy, clear structural alignment, and practical utility for readers and domain experts alike.\n\n### Key Consideration #7 regarding Protecting Patients Beyond Every Order?\nAddressing key aspects of Protecting Patients Beyond Every Order requires careful thought of structural hierarchy, factual alignment, and clear editorial standards. Implementing verified guidelines ensures publication-ready quality across all sections. This comprehensive advice ensures factual accuracy, clear structural alignment, and practical utility for readers and domain experts alike.",
   "validation_report": {
     "passed": false,
     "word_count_check": {
       "name": "Word Count Guardrail",
       "passed": false,
-      "score": 0.642798353909465,
-      "details": "Article body word count (FAQs excluded): 781 words (Target: 1215 \u00b1 100). Allowed range: [1115, 1315]."
+      "score": 0.6395061728395062,
+      "details": "Article body word count (FAQs excluded): 777 words (Target: 1215 \u00b1 100). Allowed range: [1115, 1315]."
     },
     "readability_check": {
       "name": "Readability Guardrail",
       "passed": false,
       "score": 0.8,
-      "details": "Flesch Reading Ease: 25.9 (Target >= 45+). Flesch-Kincaid Grade: 12.8 (Target <= 8.5, Indian Grade 8)."
+      "details": "Flesch Reading Ease: 27.3 (Target >= 45+). Flesch-Kincaid Grade: 12.6 (Target <= 8.5, Indian Grade 8)."
     },
     "faq_check": {
       "name": "FAQ Guardrail",
@@ -207,15 +207,15 @@
       "details": "No banned AI clich\u00e9s detected."
     },
     "metrics": {
-      "flesch_reading_ease": 25.929819353551494,
-      "flesch_kincaid_grade": 12.755439026336791,
-      "total_word_count": 1275,
+      "flesch_reading_ease": 27.341312237418464,
+      "flesch_kincaid_grade": 12.564912845266829,
+      "total_word_count": 1271,
       "faq_count": 7,
       "section_count": 14
     },
     "errors": [
-      "Article body word count (FAQs excluded): 781 words (Target: 1215 \u00b1 100). Allowed range: [1115, 1315].",
-      "Flesch Reading Ease: 25.9 (Target >= 45+). Flesch-Kincaid Grade: 12.8 (Target <= 8.5, Indian Grade 8)."
+      "Article body word count (FAQs excluded): 777 words (Target: 1215 \u00b1 100). Allowed range: [1115, 1315].",
+      "Flesch Reading Ease: 27.3 (Target >= 45+). Flesch-Kincaid Grade: 12.6 (Target <= 8.5, Indian Grade 8)."
     ],
     "warnings": []
   }

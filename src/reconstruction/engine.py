@@ -1,9 +1,11 @@
-"""Human Reconstruction Engine - Main orchestrator for local Python article synthesis."""
+"""Human Reconstruction Engine - Version 4 Local Blended Synthesizer (0 LLM Calls)."""
 
-from typing import List
+import random
+from typing import List, Dict
 from schemas.variant import VariantOutput
 from schemas.document import DocumentModel, Section, FAQItem
 from src.style.readability import optimize_for_grade_8_readability
+from src.style.cliche_cleaner import clean_ai_cliches
 from .aligner import align_sections_across_variants
 from .segmenter import segment_sentences
 from .vocabulary import select_best_phrasing
@@ -15,16 +17,21 @@ def reconstruct_article(
     retained_variants: List[VariantOutput],
     original_document: DocumentModel
 ) -> DocumentModel:
-    """Synthesize one publication-ready cohesive article from 7 retained variants.
+    """Synthesize Version 4 (Reconstructed Blended Variant) 100% locally in Python.
+
+    Version 4 is reconstructed by extracting factual meaning from 3 primary draft versions:
+    - Version 1: Educational (Clear, structured, neutral, informative)
+    - Version 2: Conversational (Natural, patient-friendly, everyday English, warmer)
+    - Version 3: Patient-first (Reader's perspective, relatable, varied pacing)
 
     This function operates 100% deterministically in Python without invoking any LLM APIs.
 
     Args:
-        retained_variants: List of 7 retained VariantOutput items.
+        retained_variants: List of retained VariantOutput items.
         original_document: Original baseline DocumentModel.
 
     Returns:
-        Synthesized DocumentModel instance.
+        Synthesized DocumentModel instance representing Version 4.
     """
     if not retained_variants:
         return original_document
@@ -32,7 +39,7 @@ def reconstruct_article(
     aligned_sections = align_sections_across_variants(retained_variants)
     reconstructed_sections: List[Section] = []
 
-    # Calculate target body budget from original document body
+    # Target body word budget matching baseline
     orig_body_words = sum(s.word_count for s in original_document.sections if "faq" not in s.heading.lower())
     target_body_budget = orig_body_words if (1000 <= orig_body_words <= 1400) else 1215
 
@@ -42,30 +49,60 @@ def reconstruct_article(
 
     for heading, sec_variants in non_faq_aligned.items():
         base_level = sec_variants[0].level if sec_variants else 2
-        synthesized_raw = select_best_phrasing(sec_variants)
-        sentences = segment_sentences(synthesized_raw)
 
-        # Apply transitions improvement
-        improved_sentences = [
-            improve_sentence_transition(s, idx)
-            for idx, s in enumerate(sentences)
-        ]
+        # 1. Categorize available section drafts into V1 (Educational), V2 (Conversational), V3 (Patient-first)
+        v1_educational = [v for v in sec_variants if "technical" in v.content.lower() or "scientific" in v.content.lower() or "editor" in v.content.lower()]
+        v2_conversational = [v for v in sec_variants if "you" in v.content.lower() or "conversational" in v.content.lower() or "educator" in v.content.lower()]
+        v3_patient_first = [v for v in sec_variants if "patient" in v.content.lower() or "story" in v.content.lower() or "evidence" in v.content.lower()]
 
-        # Apply rhythm balancing
-        rhythmic_sentences = balance_paragraph_rhythm(improved_sentences)
-        content_joined = " ".join(rhythmic_sentences)
+        txt_v1 = v1_educational[0].content if v1_educational else (sec_variants[0].content if sec_variants else "")
+        txt_v2 = v2_conversational[0].content if v2_conversational else (sec_variants[1].content if len(sec_variants) > 1 else txt_v1)
+        txt_v3 = v3_patient_first[0].content if v3_patient_first else (sec_variants[2].content if len(sec_variants) > 2 else txt_v2)
 
-        # Apply Grade 8 readability optimization per section
-        optimized_content = optimize_for_grade_8_readability(content_joined)
+        # 2. Extract complete sentences from V1, V2, V3
+        sentences_v1 = [s.strip() for s in segment_sentences(txt_v1) if s.strip()]
+        sentences_v2 = [s.strip() for s in segment_sentences(txt_v2) if s.strip()]
+        sentences_v3 = [s.strip() for s in segment_sentences(txt_v3) if s.strip()]
 
-        # Trim or keep complete sentences to fit section budget naturally
+        # 3. Organic Reconstruction (Version 4 Blending Algorithm)
+        # Take opening idea from V2 (Conversational), sentence structure from V1, vocabulary from V3
+        blended_sentences = []
+
+        # Opening idea from V2 if available, else V1
+        if sentences_v2:
+            opening = sentences_v2[0]
+            opening = clean_ai_cliches(opening)
+            blended_sentences.append(opening)
+
+        # Middle body sentences blending V1 and V3
+        middle_candidates = sentences_v1[1:] + sentences_v3[1:]
+        seen_stems = set()
+        for s in middle_candidates:
+            stem = s[:15].lower()
+            if stem not in seen_stems and len(blended_sentences) < 6:
+                seen_stems.add(stem)
+                clean_s = clean_ai_cliches(s)
+                if clean_s:
+                    blended_sentences.append(clean_s)
+
+        # Closing sentence from V2 (Conversational) if distinct
+        if len(sentences_v2) > 1:
+            closing = clean_ai_cliches(sentences_v2[-1])
+            if closing and closing.lower() not in [b.lower() for b in blended_sentences]:
+                blended_sentences.append(closing)
+
+        # 4. Human rhythm & readability optimization
+        raw_blended = " ".join(blended_sentences)
+        optimized_content = optimize_for_grade_8_readability(raw_blended)
+
+        # Ensure section is strictly constructed of complete sentences
         sec_sentences = [s.strip() for s in optimized_content.split(".") if s.strip()]
         kept_sentences = []
         accumulated_words = 0
 
         for s in sec_sentences:
             s_words = len(s.split())
-            if accumulated_words + s_words <= per_section_budget + 30 or not kept_sentences:
+            if accumulated_words + s_words <= per_section_budget + 35 or not kept_sentences:
                 s_clean = s if s.endswith((".", "!", "?")) else s + "."
                 kept_sentences.append(s_clean)
                 accumulated_words += s_words
@@ -91,7 +128,7 @@ def reconstruct_article(
             )
         )
 
-    # Synthesize FAQs ensuring >= 7 FAQs, 3-4 lines each
+    # Synthesize FAQs for Version 4
     reconstructed_faqs: List[FAQItem] = []
     seen_q = set()
 
@@ -104,6 +141,7 @@ def reconstruct_article(
         if norm_q not in seen_q:
             seen_q.add(norm_q)
             ans = optimize_for_grade_8_readability(faq.answer)
+            ans = clean_ai_cliches(ans)
             if len(ans.split()) < 35:
                 ans += " This comprehensive guidance ensures factual accuracy, clear structural alignment, and practical utility for readers and domain experts alike."
 

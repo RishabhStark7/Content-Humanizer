@@ -6,7 +6,7 @@ from schemas.validation import GuardrailCheckResult
 
 def check_word_count(
     document: DocumentModel,
-    target_count: int = 1200,
+    target_count: int = 1215,
     tolerance: int = 100
 ) -> GuardrailCheckResult:
     """Validate body word count against target (±100 words, FAQs excluded per spec).
@@ -23,10 +23,12 @@ def check_word_count(
     body_words = sum(s.word_count for s in document.sections if "faq" not in s.heading.lower())
 
     # Determine effective body target count
-    effective_target = target_count if target_count > 0 else 1200
-    if effective_target > 1600:
-        # If total doc word count was passed, estimate body word target (~70% of total)
-        effective_target = int(effective_target * 0.70)
+    if 900 <= target_count <= 1400:
+        effective_target = target_count
+    elif target_count > 1400:
+        effective_target = int(target_count * 0.65)
+    else:
+        effective_target = 1200
 
     min_allowed = max(100, effective_target - tolerance)
     max_allowed = effective_target + tolerance

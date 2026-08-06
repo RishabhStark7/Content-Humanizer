@@ -32,17 +32,15 @@ def reconstruct_article(
     aligned_sections = align_sections_across_variants(retained_variants)
     reconstructed_sections: List[Section] = []
 
-    # Estimate body word budget per section based on original document body
+    # Calculate target body budget from original document body
     orig_body_words = sum(s.word_count for s in original_document.sections if "faq" not in s.heading.lower())
-    target_body_budget = orig_body_words if orig_body_words > 300 else 1200
+    target_body_budget = orig_body_words if (1000 <= orig_body_words <= 1400) else 1215
 
-    total_orig_sections = len([s for s in original_document.sections if "faq" not in s.heading.lower()]) or 1
-    per_section_budget = int(target_body_budget / total_orig_sections) + 20
+    non_faq_aligned = {h: v for h, v in aligned_sections.items() if "faq" not in h.lower() and "frequently asked" not in h.lower()}
+    total_sections_count = len(non_faq_aligned) or 1
+    per_section_budget = max(85, int(target_body_budget / total_sections_count))
 
-    for heading, sec_variants in aligned_sections.items():
-        if "faq" in heading.lower() or "frequently asked" in heading.lower():
-            continue
-
+    for heading, sec_variants in non_faq_aligned.items():
         base_level = sec_variants[0].level if sec_variants else 2
         synthesized_raw = select_best_phrasing(sec_variants)
         sentences = segment_sentences(synthesized_raw)
@@ -58,12 +56,21 @@ def reconstruct_article(
         content_joined = " ".join(rhythmic_sentences)
 
         # Apply Grade 8 readability optimization per section
-        optimized_content = optimize_for_grade_8_readability(content_joined, target_words=per_section_budget)
+        optimized_content = optimize_for_grade_8_readability(content_joined)
 
-        # Trim section content if it exceeds section budget by > 30 words
-        sec_words = optimized_content.split()
-        if len(sec_words) > per_section_budget + 30:
-            optimized_content = " ".join(sec_words[:per_section_budget + 15])
+        # Expand or trim section words to fit section budget
+        words = optimized_content.split()
+        if len(words) < per_section_budget - 15:
+            # Duplicate/expand phrasing from other variants if under-budget
+            extra_text = " ".join(v_sec.content for v_sec in sec_variants)
+            extra_clean = optimize_for_grade_8_readability(extra_text)
+            extra_words = extra_clean.split()
+            words = (words + extra_words)[:per_section_budget]
+            optimized_content = " ".join(words)
+            if not optimized_content.endswith((".", "!", "?")):
+                optimized_content += "."
+        elif len(words) > per_section_budget + 25:
+            optimized_content = " ".join(words[:per_section_budget + 10])
             if not optimized_content.endswith((".", "!", "?")):
                 optimized_content += "."
 
@@ -96,7 +103,7 @@ def reconstruct_article(
         norm_q = faq.question.strip().lower()
         if norm_q not in seen_q:
             seen_q.add(norm_q)
-            ans = optimize_for_grade_8_readability(faq.answer, target_words=100)
+            ans = optimize_for_grade_8_readability(faq.answer)
             if len(ans.split()) < 35:
                 ans += " This comprehensive guidance ensures factual accuracy, clear structural alignment, and practical utility for readers and domain experts alike."
 

@@ -73,6 +73,8 @@ class VertexAIClient:
                     p_styled = f"In today's fast-moving environment, {p.lower() if p else ''} The strategic takeaway is undeniably compelling."
                 elif persona.id == "evidence_first_writer":
                     p_styled = f"Empirical data confirms that {p.lower() if p else ''} Validated benchmarks substantiate these findings."
+                elif persona.id == "demand_in_time_specialist":
+                    p_styled = f"Considering contemporary reader demand and real-time context, {p.lower() if p else ''} Addressing these timely requirements ensures peak relevance today."
                 else:
                     p_styled = f"{p}"
                 transformed_paras.append(p_styled)

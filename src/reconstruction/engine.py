@@ -1,4 +1,4 @@
-"""Human Reconstruction Engine - Section-by-Section 7-Variant Merger Engine (0 LLM Calls)."""
+"""Human Reconstruction Engine - Section-by-Section Local Variant Merger Engine (0 LLM Calls)."""
 
 from typing import List, Dict
 from schemas.variant import VariantOutput
@@ -10,24 +10,28 @@ from .segmenter import segment_sentences
 
 
 def reconstruct_article(
-    retained_variants: List[VariantOutput],
-    original_document: DocumentModel
+    input_variants: List[VariantOutput],
+    baseline_document: DocumentModel = None
 ) -> DocumentModel:
-    """Synthesize a brand-new 8th reconstructed document by merging distinct content from 7 retained variant documents section-by-section.
+    """Synthesize a brand-new reconstructed document by locally merging user-provided variants section-by-section.
 
     This engine operates 100% deterministically in Python without invoking any LLM APIs.
 
     Args:
-        retained_variants: List of 7 retained VariantOutput items.
-        original_document: Baseline DocumentModel.
+        input_variants: List of input VariantOutput items (provided by user or AI).
+        baseline_document: Optional baseline DocumentModel for title and metadata.
 
     Returns:
-        Synthesized DocumentModel instance representing the 8th merged article.
+        Synthesized DocumentModel instance representing the blended reconstructed document.
     """
-    if not retained_variants:
-        return original_document
+    if not input_variants:
+        return baseline_document or DocumentModel(title="Reconstructed Document", metadata={}, sections=[], faqs=[], original_format="docx", total_word_count=0, raw_content="")
 
-    aligned_sections = align_sections_across_variants(retained_variants)
+    # Determine baseline title and metadata
+    doc_title = baseline_document.title if baseline_document else input_variants[0].title
+    orig_format = baseline_document.original_format if baseline_document else "docx"
+
+    aligned_sections = align_sections_across_variants(input_variants)
     reconstructed_sections: List[Section] = []
 
     # Non-FAQ sections to process
@@ -36,7 +40,7 @@ def reconstruct_article(
     for heading, sec_variants in non_faq_aligned.items():
         base_level = sec_variants[0].level if sec_variants else 2
 
-        # Extract sentences section-by-section from each of the 7 retained variants
+        # Extract sentences section-by-section from each input variant
         variant_sentences: List[List[str]] = []
         for v_sec in sec_variants:
             sentences = [s.strip() for s in segment_sentences(v_sec.content) if s.strip()]
@@ -46,32 +50,32 @@ def reconstruct_article(
         merged_sentences = []
         seen_stems = set()
 
-        # Step A: Take Opening Hook from Variant 4 (Conversational Expert) or Variant 1
-        if len(variant_sentences) > 3 and variant_sentences[3]:
-            opening = clean_ai_cliches(variant_sentences[3][0])
+        # Step A: Take Opening Hook from Variant 1
+        if variant_sentences and variant_sentences[0]:
+            opening = clean_ai_cliches(variant_sentences[0][0])
             if opening:
                 seen_stems.add(opening[:15].lower())
                 merged_sentences.append(opening)
 
-        # Step B: Pick 1 distinct, non-duplicate sentence from each of the 7 variants section-by-section
-        for v_idx, v_sentences in enumerate(variant_sentences):
-            for s in v_sentences:
+        # Step B: Pick 1 unique, non-repeating sentence from each subsequent input variant
+        for v_idx in range(1, len(variant_sentences)):
+            for s in variant_sentences[v_idx]:
                 clean_s = clean_ai_cliches(s)
                 if not clean_s or len(clean_s.split()) < 3:
                     continue
 
                 stem = clean_s[:15].lower()
-                # Ensure no structural repetition (e.g. skip if another variant had "every X is monitored")
-                core_words = set(clean_s.lower().split()[:5])
-                if not any(len(core_words.intersection(set(prev.lower().split()[:5]))) >= 4 for prev in merged_sentences):
-                    if stem not in seen_stems and len(merged_sentences) < 6:
+                # Check that sentence is not a structural duplicate of previously merged sentences
+                words_set = set(clean_s.lower().split()[:5])
+                if not any(len(words_set.intersection(set(prev.lower().split()[:5]))) >= 4 for prev in merged_sentences):
+                    if stem not in seen_stems and len(merged_sentences) < 8:
                         seen_stems.add(stem)
                         merged_sentences.append(clean_s)
-                        break  # Take max 1 sentence per variant to prevent structural repetition
+                        break  # Pick 1 unique sentence from this variant and move to next variant
 
-        # Step C: Take Closing Impact Statement from Variant 5 (Story-Driven Educator)
-        if len(variant_sentences) > 4 and variant_sentences[4]:
-            closing = clean_ai_cliches(variant_sentences[4][-1])
+        # Step C: Take Closing Impact Statement from last variant
+        if len(variant_sentences) > 1 and variant_sentences[-1]:
+            closing = clean_ai_cliches(variant_sentences[-1][-1])
             if closing and closing[:15].lower() not in seen_stems:
                 merged_sentences.append(closing)
 
@@ -79,7 +83,7 @@ def reconstruct_article(
         raw_section = " ".join(merged_sentences)
         optimized_section = optimize_for_grade_8_readability(raw_section)
 
-        # Preserve bullets
+        # Preserve bullets across variants
         merged_bullets = []
         for v_sec in sec_variants:
             for b in v_sec.bullets:
@@ -96,12 +100,14 @@ def reconstruct_article(
             )
         )
 
-    # Merging FAQs section-by-section across 7 variants
+    # Merging FAQs section-by-section across input variants
     reconstructed_faqs: List[FAQItem] = []
     seen_q = set()
 
-    all_faqs = list(original_document.faqs)
-    for v in retained_variants:
+    all_faqs = []
+    if baseline_document:
+        all_faqs.extend(baseline_document.faqs)
+    for v in input_variants:
         all_faqs.extend(v.faqs)
 
     for faq in all_faqs:
@@ -128,14 +134,13 @@ def reconstruct_article(
         for i in range(1, needed + 1):
             reconstructed_faqs.append(
                 FAQItem(
-                    question=f"What additional best practices support {original_document.title}?",
+                    question=f"What additional best practices support {doc_title}?",
                     answer=f"Adhering to rigorous editorial guardrails, clear heading hierarchies, and consistent terminology guarantees high clarity. Continuous review against target readability standards ensures publication-ready quality.",
                     line_count=3,
                     word_count=35
                 )
             )
 
-    title = original_document.title
     full_parts = []
     for sec in reconstructed_sections:
         full_parts.append(f"## {sec.heading}\n{sec.content}")
@@ -151,11 +156,11 @@ def reconstruct_article(
     total_words = len(raw_reconstructed.split())
 
     return DocumentModel(
-        title=title,
-        metadata=original_document.metadata,
+        title=doc_title,
+        metadata=baseline_document.metadata if baseline_document else {},
         sections=reconstructed_sections,
         faqs=reconstructed_faqs,
-        original_format=original_document.original_format,
+        original_format=orig_format,
         total_word_count=total_words,
         raw_content=raw_reconstructed
     )

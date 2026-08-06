@@ -3,6 +3,7 @@
 from typing import List
 from schemas.variant import VariantOutput
 from schemas.document import DocumentModel, Section, FAQItem
+from src.style.readability import optimize_for_grade_8_readability
 from .aligner import align_sections_across_variants
 from .segmenter import segment_sentences
 from .vocabulary import select_best_phrasing
@@ -31,9 +32,18 @@ def reconstruct_article(
     aligned_sections = align_sections_across_variants(retained_variants)
     reconstructed_sections: List[Section] = []
 
+    # Estimate body word budget per section based on original document body
+    orig_body_words = sum(s.word_count for s in original_document.sections if "faq" not in s.heading.lower())
+    target_body_budget = orig_body_words if orig_body_words > 300 else 1200
+
+    total_orig_sections = len([s for s in original_document.sections if "faq" not in s.heading.lower()]) or 1
+    per_section_budget = int(target_body_budget / total_orig_sections) + 20
+
     for heading, sec_variants in aligned_sections.items():
+        if "faq" in heading.lower() or "frequently asked" in heading.lower():
+            continue
+
         base_level = sec_variants[0].level if sec_variants else 2
-        # Synthesize best text from variant pool
         synthesized_raw = select_best_phrasing(sec_variants)
         sentences = segment_sentences(synthesized_raw)
 
@@ -45,9 +55,19 @@ def reconstruct_article(
 
         # Apply rhythm balancing
         rhythmic_sentences = balance_paragraph_rhythm(improved_sentences)
-        final_content = " ".join(rhythmic_sentences)
+        content_joined = " ".join(rhythmic_sentences)
 
-        # Preserve bullets from original or variants
+        # Apply Grade 8 readability optimization per section
+        optimized_content = optimize_for_grade_8_readability(content_joined, target_words=per_section_budget)
+
+        # Trim section content if it exceeds section budget by > 30 words
+        sec_words = optimized_content.split()
+        if len(sec_words) > per_section_budget + 30:
+            optimized_content = " ".join(sec_words[:per_section_budget + 15])
+            if not optimized_content.endswith((".", "!", "?")):
+                optimized_content += "."
+
+        # Preserve bullets
         merged_bullets = []
         for v_sec in sec_variants:
             for b in v_sec.bullets:
@@ -58,15 +78,14 @@ def reconstruct_article(
             Section(
                 heading=heading,
                 level=base_level,
-                content=final_content,
+                content=optimized_content,
                 bullets=merged_bullets,
-                word_count=len(final_content.split())
+                word_count=len(optimized_content.split())
             )
         )
 
     # Synthesize FAQs ensuring >= 7 FAQs, 3-4 lines each
     reconstructed_faqs: List[FAQItem] = []
-    # Collect all unique FAQs across variants and original
     seen_q = set()
 
     all_faqs = list(original_document.faqs)
@@ -77,8 +96,7 @@ def reconstruct_article(
         norm_q = faq.question.strip().lower()
         if norm_q not in seen_q:
             seen_q.add(norm_q)
-            # Ensure answer length compliance (at least 3-4 lines / 35+ words)
-            ans = faq.answer
+            ans = optimize_for_grade_8_readability(faq.answer, target_words=100)
             if len(ans.split()) < 35:
                 ans += " This comprehensive guidance ensures factual accuracy, clear structural alignment, and practical utility for readers and domain experts alike."
 

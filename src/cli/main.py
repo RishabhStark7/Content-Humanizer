@@ -15,6 +15,7 @@ from src.generation.variant_generator import generate_10_variants
 from src.diversity.filter import filter_most_diverse_variants
 from src.reconstruction.engine import reconstruct_article
 from src.style.cliche_cleaner import clean_ai_cliches
+from src.style.readability import optimize_document_readability
 from src.validation.engine import validate_article
 from src.exporters.docx_exporter import export_to_docx
 from src.exporters.md_exporter import export_to_markdown
@@ -67,6 +68,7 @@ def process_doc(input: str, output_dir: str):
     # 6. Style Refinement & Validation
     console.print("[blue]Step 6/7:[/blue] Applying style refinement and validating guardrails...")
     reconstructed_doc.raw_content = clean_ai_cliches(reconstructed_doc.raw_content)
+    reconstructed_doc = optimize_document_readability(reconstructed_doc, target_body_words=doc.total_word_count)
     val_report = validate_article(reconstructed_doc, target_word_count=doc.total_word_count)
 
     # 7. Multi-Format Export
@@ -119,6 +121,7 @@ def process_brief(brief: str, output_dir: str):
     # 6. Style Refinement & Validation
     console.print("[blue]Step 6/7:[/blue] Cleaning clichés and validating editorial guardrails...")
     reconstructed_doc.raw_content = clean_ai_cliches(reconstructed_doc.raw_content)
+    reconstructed_doc = optimize_document_readability(reconstructed_doc, target_body_words=brief_model.target_word_count)
     val_report = validate_article(reconstructed_doc, target_word_count=brief_model.target_word_count)
 
     # 7. Multi-Format Export

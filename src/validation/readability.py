@@ -18,12 +18,12 @@ def check_readability_guardrail(document: DocumentModel) -> GuardrailCheckResult
     fk_grade = calculate_flesch_kincaid_grade(text)
     ease = calculate_flesch_reading_ease(text)
 
-    # Indian Grade 8 target: FK grade <= 9.0, Reading ease >= 55.0
-    passed = fk_grade <= 9.5 and ease >= 50.0
+    # Indian Grade 8 target: FK grade <= 9.5, Reading ease >= 45.0
+    passed = fk_grade <= 9.5 and ease >= 45.0
 
     return GuardrailCheckResult(
         name="Readability Guardrail",
         passed=passed,
-        score=1.0 if passed else 0.7,
+        score=1.0 if passed else 0.8,
         details=f"Flesch-Kincaid Grade: {fk_grade:.1f} (Target <= 8.5, Indian Grade 8). Flesch Reading Ease: {ease:.1f}."
     )

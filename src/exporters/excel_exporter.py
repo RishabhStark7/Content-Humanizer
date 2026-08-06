@@ -120,9 +120,17 @@ def export_to_excel(
         df_diversity = pd.DataFrame({"Category": [], "Details": []})
 
     # Write multi-sheet Excel file using pandas + openpyxl
-    with pd.ExcelWriter(str(out_file), engine="openpyxl") as writer:
-        df_summary.to_excel(writer, sheet_name="Executive Summary", index=False)
-        df_markers.to_excel(writer, sheet_name="Quality Guardrail Markers", index=False)
-        df_diversity.to_excel(writer, sheet_name="Diversity Analysis", index=False)
+    try:
+        with pd.ExcelWriter(str(out_file), engine="openpyxl") as writer:
+            df_summary.to_excel(writer, sheet_name="Executive Summary", index=False)
+            df_markers.to_excel(writer, sheet_name="Quality Guardrail Markers", index=False)
+            df_diversity.to_excel(writer, sheet_name="Diversity Analysis", index=False)
+    except PermissionError:
+        alt_file = out_file.parent / f"{out_file.stem}_new.xlsx"
+        with pd.ExcelWriter(str(alt_file), engine="openpyxl") as writer:
+            df_summary.to_excel(writer, sheet_name="Executive Summary", index=False)
+            df_markers.to_excel(writer, sheet_name="Quality Guardrail Markers", index=False)
+            df_diversity.to_excel(writer, sheet_name="Diversity Analysis", index=False)
+        return alt_file
 
     return out_file

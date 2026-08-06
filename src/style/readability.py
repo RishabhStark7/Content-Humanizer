@@ -1,4 +1,4 @@
-"""Readability scoring and Grade 8 optimization engine targeting Flesch Reading Ease >= 45+."""
+"""Readability scoring and Grade 8 optimization engine for natural human prose flow."""
 
 import re
 import textstat
@@ -86,7 +86,7 @@ def clean_text_for_readability(text: str) -> str:
 
 
 def calculate_flesch_reading_ease(text: str) -> float:
-    """Calculate Flesch Reading Ease score (higher is easier to read, target >= 45+)."""
+    """Calculate Flesch Reading Ease score (higher is easier to read, target >= 40+)."""
     if not text.strip():
         return 70.0
     clean_prose = clean_text_for_readability(text)
@@ -110,12 +110,18 @@ def calculate_flesch_kincaid_grade(text: str) -> float:
 
 
 def optimize_for_grade_8_readability(text: str) -> str:
-    """Transform text string to achieve Flesch Reading Ease >= 45+ and FK Grade <= 8.5."""
+    """Transform text to natural human editorial prose while optimizing vocabulary for Grade 8 readability.
+
+    NO artificial word chunking is performed. Sentences are kept grammatically complete.
+    """
     if not text.strip():
         return text
 
-    # 1. Clean punctuation & mock phrases
-    cleaned = text.replace(":.", ".").replace("?.", "?").replace("!.", "!").replace("..", ".").replace(" ,", ",").replace(":", ".")
+    # 1. Clean punctuation artifacts & mock phrases
+    cleaned = text.replace(":.", ".").replace("?.", "?").replace("!.", "!").replace("..", ".").replace(" ,", ",")
+    cleaned = re.sub(r"\s*([.,!?])", r"\1", cleaned)  # Fix space before punctuation
+    cleaned = re.sub(r"([.,!?])([A-Za-z])", r"\1 \2", cleaned)  # Ensure space after punctuation
+
     mock_phrases = [
         r"Here is what you need to know:\s*",
         r"It is simpler than it looks once you get the hang of it\.\s*",
@@ -128,12 +134,12 @@ def optimize_for_grade_8_readability(text: str) -> str:
     for mp in mock_phrases:
         cleaned = re.sub(mp, "", cleaned, flags=re.IGNORECASE)
 
-    # 2. Substitute 3-4 syllable vocabulary with simple words
+    # 2. Substitute multi-syllable academic vocabulary with natural simple words
     for complex_word, simple_word in SIMPLE_VOCABULARY_MAP.items():
         pattern = re.compile(rf"\b{complex_word}\b", re.IGNORECASE)
         cleaned = pattern.sub(simple_word, cleaned)
 
-    # 3. Split into short sentences (max 6-7 words per sentence for high reading ease score)
+    # 3. Clean up sentence flow naturally and remove consecutive duplicate sentences
     lines = cleaned.split("\n")
     processed_lines = []
 
@@ -144,38 +150,30 @@ def optimize_for_grade_8_readability(text: str) -> str:
             continue
 
         raw_sentences = re.split(r"(?<=[.!?])\s+", stripped)
-        good_sentences = []
+        clean_sentences = []
 
         for s in raw_sentences:
             s_clean = s.strip()
-            if not s_clean or len(s_clean.split()) < 2:
+            if not s_clean:
                 continue
 
-            words = s_clean.split()
-            if len(words) > 5:
-                # Chunk sentence into 5 word chunks ending with period
-                for i in range(0, len(words), 5):
-                    chunk = " ".join(words[i:i+5])
-                    if len(chunk.split()) >= 2:
-                        chunk = chunk.strip(",;:")
-                        if not chunk.endswith((".", "!", "?")):
-                            chunk += "."
-                        if chunk[0].islower():
-                            chunk = chunk[0].upper() + chunk[1:]
-                        good_sentences.append(chunk)
-            else:
-                s_clean = s_clean.strip(",;:")
-                if not s_clean.endswith((".", "!", "?")):
-                    s_clean += "."
-                good_sentences.append(s_clean)
+            # Ensure sentence starts with capital letter and ends with punctuation
+            if s_clean[0].islower():
+                s_clean = s_clean[0].upper() + s_clean[1:]
+            if not s_clean.endswith((".", "!", "?")):
+                s_clean += "."
 
-        processed_lines.append(" ".join(good_sentences))
+            # Remove exact consecutive duplicates
+            if not clean_sentences or clean_sentences[-1].lower() != s_clean.lower():
+                clean_sentences.append(s_clean)
+
+        processed_lines.append(" ".join(clean_sentences))
 
     return "\n".join(processed_lines)
 
 
 def optimize_document_readability(document: DocumentModel, target_body_words: int = 1200) -> DocumentModel:
-    """Optimize DocumentModel sections and raw_content to pass Grade 8 readability and word count bounds."""
+    """Optimize DocumentModel sections and raw_content for natural human reading flow."""
     for sec in document.sections:
         sec.content = optimize_for_grade_8_readability(sec.content)
         sec.word_count = len(sec.content.split())

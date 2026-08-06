@@ -58,21 +58,21 @@ def reconstruct_article(
         # Apply Grade 8 readability optimization per section
         optimized_content = optimize_for_grade_8_readability(content_joined)
 
-        # Expand or trim section words to fit section budget
-        words = optimized_content.split()
-        if len(words) < per_section_budget - 15:
-            # Duplicate/expand phrasing from other variants if under-budget
-            extra_text = " ".join(v_sec.content for v_sec in sec_variants)
-            extra_clean = optimize_for_grade_8_readability(extra_text)
-            extra_words = extra_clean.split()
-            words = (words + extra_words)[:per_section_budget]
-            optimized_content = " ".join(words)
-            if not optimized_content.endswith((".", "!", "?")):
-                optimized_content += "."
-        elif len(words) > per_section_budget + 25:
-            optimized_content = " ".join(words[:per_section_budget + 10])
-            if not optimized_content.endswith((".", "!", "?")):
-                optimized_content += "."
+        # Trim or keep complete sentences to fit section budget naturally
+        sec_sentences = [s.strip() for s in optimized_content.split(".") if s.strip()]
+        kept_sentences = []
+        accumulated_words = 0
+
+        for s in sec_sentences:
+            s_words = len(s.split())
+            if accumulated_words + s_words <= per_section_budget + 30 or not kept_sentences:
+                s_clean = s if s.endswith((".", "!", "?")) else s + "."
+                kept_sentences.append(s_clean)
+                accumulated_words += s_words
+            else:
+                break
+
+        final_section_content = " ".join(kept_sentences)
 
         # Preserve bullets
         merged_bullets = []
@@ -85,9 +85,9 @@ def reconstruct_article(
             Section(
                 heading=heading,
                 level=base_level,
-                content=optimized_content,
+                content=final_section_content,
                 bullets=merged_bullets,
-                word_count=len(optimized_content.split())
+                word_count=len(final_section_content.split())
             )
         )
 
